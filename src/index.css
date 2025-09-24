@@ -1,0 +1,234 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    /* Core Brand Colors */
+    --primary: 280 85% 60%; /* Electric Purple */
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 290 75% 70%; /* Lighter purple for glows */
+    --secondary: 195 85% 55%; /* Bright Cyan */
+    --secondary-foreground: 0 0% 100%;
+    --accent: 45 95% 60%; /* Electric Yellow */
+    --accent-foreground: 0 0% 8%;
+    /* Neutrals - Modern and clean */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 8%;
+    --card: 0 0% 98%;
+    --card-foreground: 0 0% 8%;
+    --muted: 240 5% 96%;
+    --muted-foreground: 240 4% 46%;
+    /* Interactive States */
+    --border: 240 6% 90%;
+    --input: 240 6% 90%;
+    --ring: 280 85% 60%;
+    /* Popover */
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 8%;
+    /* Status Colors */
+    --destructive: 0 85% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --success: 142 76% 36%;
+    --success-foreground: 0 0% 100%;
+    /* Design System Variables */
+    --radius: 1rem;
+    /* Gradients */
+    --gradient-primary: linear-gradient(
+      135deg,
+      hsl(var(--primary)),
+      hsl(var(--primary-glow))
+    );
+    --gradient-secondary: linear-gradient(
+      135deg,
+      hsl(var(--secondary)),
+      hsl(var(--accent))
+    );
+    --gradient-hero: linear-gradient(
+      135deg,
+      hsl(var(--primary)),
+      hsl(var(--secondary))
+    );
+    --gradient-card: linear-gradient(
+      145deg,
+      hsl(var(--card)),
+      hsl(var(--muted))
+    );
+    /* Shadows & Effects */
+    --shadow-glow: 0 0 40px hsl(var(--primary) / 0.3);
+    --shadow-card: 0 10px 30px -10px hsl(var(--primary) / 0.1);
+    --shadow-floating: 0 20px 60px -10px hsl(var(--primary) / 0.2);
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  .dark {
+    --background: 240 10% 4%;
+    --foreground: 0 0% 95%;
+    --card: 240 10% 6%;
+    --card-foreground: 0 0% 95%;
+    --popover: 240 10% 6%;
+    --popover-foreground: 0 0% 95%;
+    --primary: 280 85% 65%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 195 85% 60%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 240 8% 15%;
+    --muted-foreground: 240 5% 65%;
+    --accent: 45 95% 65%;
+    --accent-foreground: 0 0% 8%;
+    --border: 240 8% 15%;
+    --input: 240 8% 15%;
+    --ring: 280 85% 65%;
+    --destructive: 0 85% 65%;
+    --destructive-foreground: 0 0% 100%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    @apply scroll-smooth;
+  }
+  body {
+    @apply bg-background text-foreground font-sans;
+    background-color: hsl(var(--background));
+    background-image: radial-gradient(
+        at 20% 25%,
+        hsl(var(--primary) / 0.1) 0px,
+        transparent 50%
+      ),
+      radial-gradient(
+        at 75% 75%,
+        hsl(var(--secondary) / 0.1) 0px,
+        transparent 50%
+      );
+    position: relative;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(
+        to right,
+        hsl(var(--border) / 0.15) 1px,
+        transparent 1px
+      ),
+      linear-gradient(to bottom, hsl(var(--border) / 0.15) 1px, transparent 1px);
+    background-size: 40px 40px;
+    opacity: 0.5;
+    z-index: -10;
+  }
+
+  /* NEW: Page Loader Styles */
+  #page-loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: hsl(var(--background));
+    z-index: 9999;
+  }
+}
+
+@layer components {
+  /* Updated Hero Button for shimmer effect */
+  .btn-hero {
+    @apply relative overflow-hidden bg-gradient-to-r from-primary to-secondary text-primary-foreground px-8 py-4 rounded-2xl font-semibold text-lg;
+    @apply hover:scale-105 hover:shadow-glow transition-all duration-300;
+    @apply shadow-floating;
+  }
+
+  /* NEW: Shimmer effect for buttons */
+  .btn-hero::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(
+      110deg,
+      transparent 20%,
+      rgba(255, 255, 255, 0.3),
+      transparent 80%
+    );
+    transform: translateX(-100%);
+    transition: transform 0.6s ease-in-out;
+  }
+
+  .btn-hero:hover::after {
+    transform: translateX(100%);
+  }
+
+  /* Update Card styles for Glassmorphism */
+  .card-modern {
+    @apply bg-card/60 backdrop-blur-lg border border-white/10 rounded-2xl shadow-card transition-all duration-300 hover:shadow-floating;
+  }
+  .card-glow {
+    @apply bg-card/60 backdrop-blur-lg rounded-2xl shadow-glow border border-primary/20 transition-all duration-300;
+  }
+
+  .text-gradient {
+    @apply bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent;
+  }
+}
+
+/* Add these styles to the bottom of your src/index.css file */
+
+@layer components {
+  .fluid-orb {
+    @apply absolute w-[400px] h-[400px] md:w-[600px] md:h-[600px] rounded-full;
+    background: radial-gradient(
+      circle at center,
+      hsl(var(--primary)),
+      hsl(var(--secondary))
+    );
+    filter: blur(100px);
+    opacity: 0.8;
+    animation: pulse-orb 10s infinite ease-in-out;
+    will-change: transform;
+  }
+
+  /* This is the magic for the text reveal effect */
+  .hero-text-content {
+    @apply relative text-foreground;
+    mix-blend-mode: screen; /* This inverts the colors where the orb overlaps */
+    background-color: hsl(var(--foreground));
+    padding: 3rem; /* Add some padding so the text doesn't touch the orb's edge */
+  }
+
+  /* Ensure correct blending on dark mode */
+  .dark .hero-text-content {
+    mix-blend-mode: difference;
+    background-color: transparent;
+    color: hsl(var(--foreground));
+  }
+}
+
+@layer utilities {
+  @keyframes pulse-orb {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.2);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+}
